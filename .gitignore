@@ -1,0 +1,5 @@
+checkers-api/.ssh
+checkers-api/certs
+authorization-server/certs
+authorization-server/conf/*
+

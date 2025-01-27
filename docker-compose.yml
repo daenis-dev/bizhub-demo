@@ -1,0 +1,87 @@
+version: '3.8'
+
+networks:
+  my-network:
+    driver: bridge
+
+services:
+  checkers-db:
+    image: postgres:latest
+    container_name: checkers-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: changeitdb
+      POSTGRES_DB: checkers
+    volumes:
+      - ./checkers-api/sql/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - my-network
+
+  checkers-api:
+    build:
+      context: ./checkers-api
+      dockerfile: Dockerfile
+    container_name: checkers-api
+    environment:
+      DATABASE_URL: jdbc:postgresql://checkers-db:5432/checkers
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: changeitdb
+    depends_on:
+      - checkers-db
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "checkers", "-h", "checkers-db", "-p", "5432"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    networks:
+      - my-network
+
+  auth-db:
+    image: postgres:latest
+    container_name: auth-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: changeitdb
+      POSTGRES_DB: authorization-db
+    ports:
+      - "5433:5432"
+    networks:
+      - my-network
+
+  keycloak-server:
+    build:
+      context: ./authorization-server
+      dockerfile: Dockerfile
+    container_name: keycloak-server
+    environment:
+      DB_VENDOR: postgres
+      DB_ADDR: auth-db
+      DB_PORT: 5432
+      DB_DATABASE: authorization-db
+      DB_USER: postgres
+      DB_PASSWORD: changeitdb
+      DATABASE_URL: jdbc:postgresql://auth-db:5433/authorization-db
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: changeitdb
+      KEYCLOAK_ADMIN: auth-admin
+      KEYCLOAK_ADMIN_PASSWORD: changeit
+      KC_HOSTNAME: keycloak-server
+      KC_HOSTNAME_STRICT: false
+      KC_HOST_NAME_URL: https://keycloak-server:9880
+    depends_on:
+      - auth-db
+    ports:
+      - "9880:9880"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "authorization-db", "-h", "auth-db", "-p", "5433"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    networks:
+      - my-network
