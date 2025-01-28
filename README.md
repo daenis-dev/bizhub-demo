@@ -135,7 +135,6 @@ The user scans the directory for changes to any of the files by selecting the di
 #### Accounts
 
 - **Register for an Account**
-
   - URL: https://localhost:8080/v1/register
   - Method: POST
   - Request Parameters: (x-www-form-urlencoded)
@@ -145,6 +144,8 @@ The user scans the directory for changes to any of the files by selecting the di
     - confirmed-password: string
       - Must match password
   - Response: (201 CREATED)
+
+
 
 - **Log into an Account**
 
@@ -167,8 +168,9 @@ The user scans the directory for changes to any of the files by selecting the di
     }
     ```
 
-- **Reset Password for an Account**
 
+
+- **Reset Password for an Account**
   - URL: https://localhost:8080/v1/reset-password
   - Method: POST
   - Request Parameters: (x-www-form-urlencoded)
@@ -205,6 +207,8 @@ The user scans the directory for changes to any of the files by selecting the di
     }
     ```
 
+
+
 - **Validate an artifact**
 
   - URL: https://localhost:8080/v1/artifacts/{id}
@@ -227,6 +231,8 @@ The user scans the directory for changes to any of the files by selecting the di
     	"valid": boolean
     }
     ```
+
+
 
 - **Validate multiple artifacts**
 

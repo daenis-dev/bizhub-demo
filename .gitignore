@@ -1,5 +1,5 @@
 checkers-api/.ssh
 checkers-api/certs
 authorization-server/certs
-authorization-server/conf/*
-
+authorization-server/conf/checkers-realm.json
+authorization-server/conf/keycloak.conf
