@@ -85,3 +85,13 @@ services:
       timeout: 10s
     networks:
       - my-network
+
+  employee-interface:
+    build:
+      context: ./checkers-ui
+      dockerfile: Dockerfile
+    container_name: checkers-ui
+    ports:
+      - "4200:80"
+    networks:
+      - my-network
