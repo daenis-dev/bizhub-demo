@@ -41,6 +41,8 @@ The user scans the directory for changes to any of the files by selecting the di
     ```
     cat ~/demo/checkers-api/.ssh/id_rsa.pub
     ```
+    
+  - Create copies of the public and private keys under the UI project, *demo/checkers-ui/.ssh* 
 
 - Generate self-signed certificates for the Checkers Server and the Authorization Server
 
