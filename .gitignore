@@ -1,4 +1,5 @@
 checkers-api/.ssh
+checkers-ui/.ssh
 checkers-api/certs
 authorization-server/certs
 authorization-server/conf/checkers-realm.json

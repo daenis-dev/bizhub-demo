@@ -3,8 +3,11 @@ FROM node:18 AS build
 # Set the working directory in the container
 WORKDIR /app
 
-# Clone the project from GitHub
-RUN git clone https://github.com/daenis-dev/checkers-antivirus-ui.git .
+COPY .ssh/id_rsa /root/.ssh/id_rsa
+RUN chmod 600 /root/.ssh/id_rsa
+
+RUN echo "Host github.com\n\tStrictHostKeyChecking no\n" >> /root/.ssh/config
+RUN git clone git@github.com:daenis-dev/checkers-antivirus-ui.git .
 
 # Install dependencies
 RUN npm install -g @angular/cli
