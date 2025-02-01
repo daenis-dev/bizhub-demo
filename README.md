@@ -2,17 +2,15 @@
 
 ### Overview
 
-Checkers provides a free suite of easy to use antivirus software services over the web. The initial product offering allows the user to track up to fifty immutable files.
+Checkers provides a free suite of easy to use antivirus software services over the web. The initial product offering allows the user to backup up to ten gigabytes of files.
 
 **Use Case:**
 
-A user decides that the contents of the system's *C:/Windows/Tasks* directory should never change.
+An IT employee wants to reduce the impact of ransomware attacks. Specifically, they would like to backup several Excel files that are collectively used to perform financial forecasting.  The employee logs into Checkers and uploads the critical files, which are compressed and stored.
 
-The user uploads the artifact details for the *C:/Windows/Tasks* directory by selecting the directory from their browser. These details include hashes for each file, as well as a hash for the directory itself.
+Some time after, a hacker encrypts these sensitive files and demands payment to unencrypt them. The IT team diagnoses and remediates the vulnerability that the hacker exploited to launch the ransomware, but the encrypted files remain on the system.
 
-The user scans the directory for changes to any of the files by selecting the directory from their browser. The selected directory's hash is compared to the stored directory's hash. If the two are different, each registered file's hash within the selected directory is compared to the stored file's hash. If the two are different, then the modified file's file path is displayed to the user.
-
-
+After removing the encrypted files from the system, the employee downloads the Excel files from Checkers and uploads them to the system. A hero is born.
 
 ### Set Up
 
@@ -183,9 +181,9 @@ The user scans the directory for changes to any of the files by selecting the di
 
 #### File Integrity Monitoring
 
-- **Create an artifact**
+- **Upload Files**
 
-  - URL: https://localhost:8080/v1/artifacts
+  - URL: https://localhost:8080/v1/backups
 
   - Method: POST
 
@@ -195,68 +193,26 @@ The user scans the directory for changes to any of the files by selecting the di
 
   - Request Parameters: (x-www-form-urlencoded)
 
-    - name: string
-    - file-path: string
-    - hash: string
-
+    - files: MulipartFile[]
+    
   - Response: (201 CREATED)
 
     ```
-    {
-    	"id": int,
-    	"name": string,
-    	"filePath": string
+  {
+    	"sizeInBytes": "3 MB"
     }
     ```
 
 
 
-- **Validate an artifact**
-
-  - URL: https://localhost:8080/v1/artifacts/{id}
-
+- **Download File**
+- URL: https://localhost:8080/v1/backups
   - Method: GET
-
-  - Request Headers:
-
-    - Authorization: {access-token}
-
+- Request Headers:
+  
+  - Authorization: {access-token}
   - Request Parameters:
 
-    - id: int
-
-  - Response: (200 OK)
-
-    ```
-    {
-    	"message": string,
-    	"valid": boolean
-    }
-    ```
-
-
-
-- **Validate multiple artifacts**
-
-  - URL: https://localhost:8080/v1/artifacts/{artifact-hashes}
-
-  - Method: GET
-
-  - Request Headers:
-
-    - Authorization: {access-token}
-
-  - Request Parameters:
-
-    - artifact-hashes: string
-      - List of artifacts, including their file paths and current hashes
-      - File path and hash separated by a colon
-      - Artifacts separated by commas
-
-  - Response: (200 OK)
-
-    ```
-    {
-    	"corruptArtifactFilePaths": string[]
-    }
-    ```
+    - file-name: string
+- Response: (200 OK)
+  - *application/octet-stream*
