@@ -16,11 +16,13 @@ COPY certs/checkers-api.p12 /app
 COPY certs/server.crt /app/server.crt
 
 USER root
+RUN mkdir /app/storage
 RUN chmod 777 /app/checkers-api.p12
 RUN chmod 777 /app/server.crt
+RUN chmod 777 /app/storage
 RUN keytool -importcert -file /app/server.crt -alias keycloak-server -cacerts -storepass changeit -noprompt -v
 USER 1000
 
 EXPOSE 8080
 
-CMD ["java", "-Dkeystore-path=/app/checkers-api.p12", "-Dkeystore-password=changeit", "-Ddatabase-url=jdbc:postgresql://checkers-db:5432/checkers", "-Ddatabase-username=postgres", "-Ddatabase-password=changeitdb", "-Dkeycloak-admin-username=auth-admin", "-Dkeycloak-admin-password=changeit", "-Dkeycloak-checkers-uuid=2fc108f7-7aa3-4848-a875-5b96de059c1d", "-jar", "target/checkers-api-1.0-SNAPSHOT.jar"]
+CMD ["java", "-Dkeystore-path=/app/checkers-api.p12", "-Dkeystore-password=changeit", "-Ddatabase-url=jdbc:postgresql://checkers-db:5432/checkers", "-Ddatabase-username=postgres", "-Ddatabase-password=changeitdb", "-Dkeycloak-admin-username=auth-admin", "-Dkeycloak-admin-password=changeit", "-Dkeycloak-checkers-uuid=2fc108f7-7aa3-4848-a875-5b96de059c1d", "-Dspring.profiles.active=dev", "-jar", "target/checkers-api-1.0-SNAPSHOT.jar"]
