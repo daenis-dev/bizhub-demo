@@ -1,16 +1,16 @@
-# Checkers Antivirus
+# BizHub
 
 ### Overview
 
-Checkers provides a free suite of easy to use antivirus software services over the web. The initial product offering allows the user to backup up to ten gigabytes of files.
+BizHub provides a free suite of easy to use business tools over the web. The initial product offering allows the user to backup up to ten gigabytes of files.
 
 **Use Case:**
 
-An IT employee wants to reduce the impact of ransomware attacks. Specifically, they would like to backup several Excel files that are collectively used to perform financial forecasting.  The employee logs into Checkers and uploads the critical files, which are compressed and stored.
+An IT employee wants to reduce the impact of ransomware attacks. Specifically, they would like to backup several Excel files that are collectively used to perform financial forecasting.  The employee logs into BizHub and uploads the critical files, which are compressed and stored.
 
 Some time after, a hacker encrypts these sensitive files and demands payment to unencrypt them. The IT team diagnoses and remediates the vulnerability that the hacker exploited to launch the ransomware, but the encrypted files remain on the system.
 
-After removing the encrypted files from the system, the employee downloads the Excel files from Checkers and uploads them to the system. A hero is born.
+After removing the encrypted files from the system, the employee downloads the Excel files from BizHub and uploads them to the system. A hero is born.
 
 ### Set Up
 
@@ -19,7 +19,7 @@ After removing the encrypted files from the system, the employee downloads the E
   - Generate the keys
 
     ```
-    cd ~/demo/checkers-api
+    cd ~/demo/bizhub-api
     
     mkdir .ssh && cd .ssh
     
@@ -31,32 +31,32 @@ After removing the encrypted files from the system, the employee downloads the E
     ```
     eval $(ssh-agent)
     
-    ssh-add ~/demo/checkers-api/.ssh/id_rsa
+    ssh-add ~/demo/bizhub-api/.ssh/id_rsa
     ```
 
   - Print the public key, copy the value and register with a GitHub account
 
     ```
-    cat ~/demo/checkers-api/.ssh/id_rsa.pub
+    cat ~/demo/bizhub-api/.ssh/id_rsa.pub
     ```
     
-  - Create copies of the public and private keys under the UI project, *demo/checkers-ui/.ssh* 
+  - Create copies of the public and private keys under the UI project, *demo/bizhub-ui/.ssh* 
 
-- Generate self-signed certificates for the Checkers Server and the Authorization Server
+- Generate self-signed certificates for the BizHub Server and the Authorization Server
 
-  - Generate the self-signed certificate for Checkers
-
-    ```
-    keytool -genkeypair -alias checkers-api -keyalg RSA -keysize 4096 -storetype PKCS12 -keystore checkers-api.p12 -validity 3650 -storepass changeit
-    ```
-
-  - Export the key to a public certificate for Checkers
+  - Generate the self-signed certificate for BizHub
 
     ```
-    keytool -export -keystore checkers-api.p12 -alias checkers-api -file checkers-api.crt
+    keytool -genkeypair -alias bizhub-api -keyalg RSA -keysize 4096 -storetype PKCS12 -keystore bizhub-api.p12 -validity 3650 -storepass changeit
     ```
 
-  - Copy the public Checkers certificate into the directory *~/demo/authorization-server/certs*
+  - Export the key to a public certificate for BizHub
+
+    ```
+    keytool -export -keystore bizhub-api.p12 -alias bizhub-api -file bizhub-api.crt
+    ```
+
+  - Copy the public BizHub certificate into the directory *~/demo/authorization-server/certs*
 
   - Generate the self-signed certificate for the Authorization Server
 
@@ -70,7 +70,7 @@ After removing the encrypted files from the system, the employee downloads the E
     keytool -export -keystore server.p12 -alias keycloak-server -file server.crt
     ```
 
-  - Copy the public Authorization Server certificate into the directory *~/demo/checkers-api/certs*
+  - Copy the public Authorization Server certificate into the directory *~/demo/bizhub-api/certs*
 
 - Publish the Authorization Server's configuration files
 
@@ -94,7 +94,7 @@ After removing the encrypted files from the system, the employee downloads the E
     hostname=keycloak-server
     hostname-strict=false
     
-    mail.from=noreply@checkers-antivirus.com
+    mail.from=noreply@bizhub.com
     mail.smtp.host=smtp.host
     mail.smtp.port=587
     mail.smtp.username=update-username
@@ -107,11 +107,11 @@ After removing the encrypted files from the system, the employee downloads the E
 
     - Update *mail* properties for use with an actual SMTP server
 
-  - Rename the file *~/demo/authorization-server/conf/sample-checkers-realm.json* to be *checkers-realm.json*, and configure it to use an actual SMTP server. Relative properties include:
+  - Rename the file *~/demo/authorization-server/conf/sample-bizhub-realm.json* to be *bizhub-realm.json*, and configure it to use an actual SMTP server. Relative properties include:
 
     ```json
     "smtpServer" : {
-        "from": "noreply@checkers-antivirus.com",
+        "from": "noreply@bizhub.com",
         "host": "UPDATE_HERE",
         "port": "587",
         "user": "UPDATE_HERE",
@@ -179,7 +179,7 @@ After removing the encrypted files from the system, the employee downloads the E
 
 
 
-#### File Integrity Monitoring
+#### File Backup
 
 - **Upload Files**
 
@@ -199,20 +199,24 @@ After removing the encrypted files from the system, the employee downloads the E
 
     ```
   {
-    	"sizeInBytes": "3 MB"
+    	"occupiedUserStorageInBytes": "3 MB"
     }
     ```
+    
+    - Total storage occupied by user backup files, including this one
 
 
 
-- **Download File**
-- URL: https://localhost:8080/v1/backups
-  - Method: GET
-- Request Headers:
-  
-  - Authorization: {access-token}
-  - Request Parameters:
+- **Download Files**
+  - URL: https://localhost:8080/v1/backups
+    - Method: GET
+  - Request Headers:
+    
+    - Authorization: {access-token}
+    - Request Parameters:
 
-    - file-name: string
-- Response: (200 OK)
-  - *application/octet-stream*
+      - file-names: string
+        - Delimited by comas
+  - Response: (200 OK)
+    - *application/octet-stream*
+      - A ZIP file containing the specified files

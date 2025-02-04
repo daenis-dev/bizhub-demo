@@ -5,35 +5,35 @@ networks:
     driver: bridge
 
 services:
-  checkers-db:
+  bizhub-db:
     image: postgres:latest
-    container_name: checkers-db
+    container_name: bizhub-db
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: changeitdb
-      POSTGRES_DB: checkers
+      POSTGRES_DB: bizhub
     volumes:
-      - ./checkers-api/sql/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      - ./bizhub-api/sql/schema.sql:/docker-entrypoint-initdb.d/schema.sql
     ports:
       - "5432:5432"
     networks:
       - my-network
 
-  checkers-api:
+  bizhub-api:
     build:
-      context: ./checkers-api
+      context: ./bizhub-api
       dockerfile: Dockerfile
-    container_name: checkers-api
+    container_name: bizhub-api
     environment:
-      DATABASE_URL: jdbc:postgresql://checkers-db:5432/checkers
+      DATABASE_URL: jdbc:postgresql://bizhub-db:5432/bizhub
       DATABASE_USERNAME: postgres
       DATABASE_PASSWORD: changeitdb
     depends_on:
-      - checkers-db
+      - bizhub-db
     ports:
       - "8080:8080"
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "checkers", "-h", "checkers-db", "-p", "5432"]
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "bizhub", "-h", "bizhub-db", "-p", "5432"]
       interval: 10s
       retries: 5
       start_period: 30s
@@ -86,11 +86,11 @@ services:
     networks:
       - my-network
 
-  employee-interface:
+  bizhub-ui:
     build:
-      context: ./checkers-ui
+      context: ./bizhub-ui
       dockerfile: Dockerfile
-    container_name: checkers-ui
+    container_name: bizhub-ui
     ports:
       - "4200:80"
     networks:

@@ -1,6 +1,6 @@
-checkers-api/.ssh
-checkers-ui/.ssh
-checkers-api/certs
+bizhub-api/.ssh
+bizhub-ui/.ssh
+bizhub-api/certs
 authorization-server/certs
-authorization-server/conf/checkers-realm.json
+authorization-server/conf/bizhub-realm.json
 authorization-server/conf/keycloak.conf

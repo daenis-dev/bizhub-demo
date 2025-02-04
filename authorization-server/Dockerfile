@@ -9,13 +9,13 @@ FROM quay.io/keycloak/keycloak:26.0.4
 
 COPY certs/server.p12 /opt/keycloak/conf/server.p12
 COPY conf/keycloak.conf /opt/keycloak/conf/keycloak.conf
-COPY conf/checkers-realm.json /opt/keycloak/data/import/realm.json
-COPY certs/checkers-api.crt /app/checkers-api.crt
+COPY conf/bizhub-realm.json /opt/keycloak/data/import/realm.json
+COPY certs/bizhub-api.crt /app/bizhub-api.crt
 
 USER root
 RUN chown keycloak:keycloak /opt/keycloak/conf/server.p12
-RUN chown keycloak:keycloak /app/checkers-api.crt
-RUN keytool -importcert -file /app/checkers-api.crt -alias checkers-api -cacerts -storepass changeit -noprompt -v
+RUN chown keycloak:keycloak /app/bizhub-api.crt
+RUN keytool -importcert -file /app/bizhub-api.crt -alias bizhub-api -cacerts -storepass changeit -noprompt -v
 
 USER keycloak
 
