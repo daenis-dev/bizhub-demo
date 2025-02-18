@@ -72,63 +72,18 @@ After removing the encrypted files from the system, the employee downloads the E
 
   - Copy the public Authorization Server certificate into the directory *~/demo/bizhub-api/certs*
 
-- Publish the Authorization Server's configuration files
-
-  - Add a file named *keycloak.conf* within the directory *~/demo/authorization-server/conf* with the following contents:
-
-    ```
-    # Database
-    db=postgres
-    db-username=postgres
-    db-password=changeitdb
-    db-url=jdbc:postgresql://auth-db:5432/authorization-db
-    
-    # Health
-    health-enabled=true
-    
-    # HTTPS
-    https-port=9880
-    https-key-store-file=/opt/keycloak/conf/server.p12
-    https-key-store-password=changeit
-    hostname-url=https://keycloak-server:9880
-    hostname=keycloak-server
-    hostname-strict=false
-    
-    mail.from=noreply@bizhub.com
-    mail.smtp.host=smtp.host
-    mail.smtp.port=587
-    mail.smtp.username=update-username
-    mail.smtp.password=update-password
-    mail.smtp.ssl=false
-    mail.smtp.tls=true
-    
-    import-realm-file=/opt/keycloak/data/import/realm.json
-    ```
-
-    - Update *mail* properties for use with an actual SMTP server
-
-  - Rename the file *~/demo/authorization-server/conf/sample-bizhub-realm.json* to be *bizhub-realm.json*, and configure it to use an actual SMTP server. Relative properties include:
-
-    ```json
-    "smtpServer" : {
-        "from": "noreply@bizhub.com",
-        "host": "UPDATE_HERE",
-        "port": "587",
-        "user": "UPDATE_HERE",
-        "password": "UPDATE_HERE",
-        "ssl": "false",
-        "starttls": "true",
-        "auth": "true"
-    }
-    ```
-
 - Build and run with Docker
 
   ```
   docker-compose up
   ```
 
-  
+
+- Enable Keycloak to send messages via SMTP for resetting passwords
+  - Navigate to the Keycloak administration console at https://keycloak-server:9880 and log in with the username 'auth-admin' and password 'changeit'
+  - Switch to the 'bizhub' realm and 'Realm Settings' from the side bar. Choose 'Email', and enter the SMTP configuraiton.
+
+
 
 ### API
 
