@@ -152,12 +152,12 @@ After removing the encrypted files from the system, the employee downloads the E
     
   - Response: (201 CREATED)
 
-    ```
-  {
+    ```json
+    {
     	"occupiedUserStorageInBytes": "3 MB"
     }
     ```
-    
+
     - Total storage occupied by user backup files, including this one
 
 
