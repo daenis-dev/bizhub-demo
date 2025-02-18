@@ -69,9 +69,9 @@ services:
       KC_HTTPS_PORT: 9880
       KC_HEALTH_ENABLED: true
       KC_DB: postgres
-      KC_DB_URL: jdbc:postgresql://auth-db:5433/authorization-db
+      KC_DB_URL: jdbc:postgresql://auth-db:5432/authorization-db
       KC_DB_USERNAME: postgres
-      KC_DB_PASSWORD: changeit
+      KC_DB_PASSWORD: changeitdb
       KC_BOOTSTRAP_ADMIN_USERNAME: auth-admin
       KC_BOOTSTRAP_ADMIN_PASSWORD: changeit
       KC_HTTP_ENABLED: false

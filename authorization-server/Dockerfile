@@ -8,7 +8,6 @@ RUN apt-get update && apt-get install -y \
 FROM quay.io/keycloak/keycloak:26.0.4
 
 COPY certs/server.p12 /opt/keycloak/conf/server.p12
-COPY conf/keycloak.conf /opt/keycloak/conf/keycloak.conf
 COPY conf/bizhub-realm.json /opt/keycloak/data/import/realm.json
 COPY certs/bizhub-api.crt /app/bizhub-api.crt
 
