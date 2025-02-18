@@ -59,20 +59,22 @@ services:
       dockerfile: Dockerfile
     container_name: keycloak-server
     environment:
-      DB_VENDOR: postgres
-      DB_ADDR: auth-db
-      DB_PORT: 5432
-      DB_DATABASE: authorization-db
-      DB_USER: postgres
-      DB_PASSWORD: changeitdb
-      DATABASE_URL: jdbc:postgresql://auth-db:5433/authorization-db
-      DATABASE_USERNAME: postgres
-      DATABASE_PASSWORD: changeitdb
-      KEYCLOAK_ADMIN: auth-admin
-      KEYCLOAK_ADMIN_PASSWORD: changeit
-      KC_HOSTNAME: keycloak-server
+      KC_HTTPS_KEY_STORE_FILE: /opt/keycloak/conf/server.p12
+      KC_HTTPS_KEY_STORE_PASSWORD: changeit
+      KC_HOSTNAME: https://keycloak-server:9880
       KC_HOSTNAME_STRICT: false
-      KC_HOST_NAME_URL: https://keycloak-server:9880
+      KC_HOSTNAME_ADMIN: https://keycloak-server:9880
+      KC_REDIRECT_TO_HTTPS: true
+      KC_IMPORT: /opt/keycloak/data/import-realm.json
+      KC_HTTPS_PORT: 9880
+      KC_HEALTH_ENABLED: true
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://auth-db:5433/authorization-db
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: changeit
+      KC_BOOTSTRAP_ADMIN_USERNAME: auth-admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: changeit
+      KC_HTTP_ENABLED: false
     depends_on:
       - auth-db
     ports:

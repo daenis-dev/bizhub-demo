@@ -19,10 +19,6 @@ RUN keytool -importcert -file /app/bizhub-api.crt -alias bizhub-api -cacerts -st
 
 USER keycloak
 
-ENV KC_BOOTSTRAP_ADMIN_USERNAME=auth-admin
-ENV KC_BOOTSTRAP_ADMIN_PASSWORD=changeit
-ENV KC_IMPORT=/opt/keycloak/data/import/realm.json
-
 EXPOSE 9880
 
-ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start", "--https-key-store-file=/opt/keycloak/conf/server.p12", "--https-key-store-password=changeit", "--db-url=jdbc:postgresql://auth-db:5432/authorization-db", "--db-password=changeitdb", "--import-realm"]
+ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start", "--import-realm"]
