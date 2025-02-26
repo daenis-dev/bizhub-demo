@@ -1,6 +1,6 @@
 {
   "id" : "338d9633-99b7-4b23-aa5f-4c4fd9de0814",
-  "realm" : "checkers",
+  "realm" : "bizhub",
   "notBefore" : 0,
   "defaultSignatureAlgorithm" : "RS256",
   "revokeRefreshToken" : false,
@@ -48,7 +48,7 @@
   "roles" : {
     "realm" : [ {
       "id" : "66833f1d-d32c-40ad-865e-59ad92265ad2",
-      "name" : "default-roles-checkers",
+      "name" : "default-roles-bizhub",
       "description" : "${role_default-roles}",
       "composite" : true,
       "composites" : {
@@ -70,12 +70,26 @@
       "attributes" : { }
     }, {
       "id" : "bfe658ea-cfbf-44a4-a448-3578f3130dd6",
-      "name" : "checkers_api_user",
+      "name" : "bizhub_api_user",
       "description" : "",
       "composite" : true,
       "composites" : {
         "client" : {
-          "checkers_api" : [ "user" ]
+          "bizhub_api" : [ "user" ]
+        }
+      },
+      "clientRole" : false,
+      "containerId" : "338d9633-99b7-4b23-aa5f-4c4fd9de0814",
+      "attributes" : { }
+    },
+    {
+      "id" : "b3e258ea-28dh-44a4-d93j-3578f3130j3h",
+      "name" : "bizhub_api_demo_user",
+      "description" : "",
+      "composite" : true,
+      "composites" : {
+        "client" : {
+          "bizhub_api" : [ "demo_user" ]
         }
       },
       "clientRole" : false,
@@ -91,9 +105,18 @@
       "attributes" : { }
     } ],
     "client" : {
-      "checkers_api" : [ {
+      "bizhub_api" : [ {
         "id" : "d8f304ac-82df-4c2b-a7cc-ee993b8caddd",
         "name" : "user",
+        "description" : "",
+        "composite" : false,
+        "clientRole" : true,
+        "containerId" : "2fc108f7-7aa3-4848-a875-5b96de059c1d",
+        "attributes" : { }
+      },
+      {
+        "id" : "dd8304ac-d847-d83m-m31q-eewo3b8caddd",
+        "name" : "demo_user",
         "description" : "",
         "composite" : false,
         "clientRole" : true,
@@ -360,7 +383,7 @@
   "groups" : [ ],
   "defaultRole" : {
     "id" : "66833f1d-d32c-40ad-865e-59ad92265ad2",
-    "name" : "default-roles-checkers",
+    "name" : "default-roles-bizhub",
     "description" : "${role_default-roles}",
     "composite" : true,
     "clientRole" : false,
@@ -418,9 +441,9 @@
       } ],
       "disableableCredentialTypes" : [ ],
       "requiredActions" : [ ],
-      "realmRoles" : [ "default-roles-checkers" ],
+      "realmRoles" : [ "default-roles-bizhub" ],
       "clientRoles" : {
-        "checkers_api" : [ "user" ]
+        "bizhub_api" : [ "user" ]
       },
       "notBefore" : 1723861688,
       "groups" : [ ]
@@ -441,12 +464,12 @@
     "clientId" : "account",
     "name" : "${client_account}",
     "rootUrl" : "${authBaseUrl}",
-    "baseUrl" : "/realms/checkers/account/",
+    "baseUrl" : "/realms/bizhub/account/",
     "surrogateAuthRequired" : false,
     "enabled" : true,
     "alwaysDisplayInConsole" : false,
     "clientAuthenticatorType" : "client-secret",
-    "redirectUris" : [ "/realms/checkers/account/*" ],
+    "redirectUris" : [ "/realms/bizhub/account/*" ],
     "webOrigins" : [ ],
     "notBefore" : 0,
     "bearerOnly" : false,
@@ -472,12 +495,12 @@
     "clientId" : "account-console",
     "name" : "${client_account-console}",
     "rootUrl" : "${authBaseUrl}",
-    "baseUrl" : "/realms/checkers/account/",
+    "baseUrl" : "/realms/bizhub/account/",
     "surrogateAuthRequired" : false,
     "enabled" : true,
     "alwaysDisplayInConsole" : false,
     "clientAuthenticatorType" : "client-secret",
-    "redirectUris" : [ "/realms/checkers/account/*" ],
+    "redirectUris" : [ "/realms/bizhub/account/*" ],
     "webOrigins" : [ ],
     "notBefore" : 0,
     "bearerOnly" : false,
@@ -566,8 +589,8 @@
     "optionalClientScopes" : [ "address", "phone", "offline_access", "microprofile-jwt" ]
   }, {
     "id" : "2fc108f7-7aa3-4848-a875-5b96de059c1d",
-    "clientId" : "checkers_api",
-    "name" : "checkers_api",
+    "clientId" : "bizhub_api",
+    "name" : "bizhub_api",
     "description" : "",
     "rootUrl" : "",
     "adminUrl" : "",
@@ -651,12 +674,12 @@
     "clientId" : "security-admin-console",
     "name" : "${client_security-admin-console}",
     "rootUrl" : "${authAdminUrl}",
-    "baseUrl" : "/admin/checkers/console/",
+    "baseUrl" : "/admin/bizhub/console/",
     "surrogateAuthRequired" : false,
     "enabled" : true,
     "alwaysDisplayInConsole" : false,
     "clientAuthenticatorType" : "client-secret",
-    "redirectUris" : [ "/admin/checkers/console/*" ],
+    "redirectUris" : [ "/admin/bizhub/console/*" ],
     "webOrigins" : [ "+" ],
     "notBefore" : 0,
     "bearerOnly" : false,
@@ -1234,7 +1257,7 @@
     "strictTransportSecurity" : "max-age=31536000; includeSubDomains"
   },
   "smtpServer" : {
-    "from": "noreply@checkers-antivirus.com",
+    "from": "noreply@bizhub-antivirus.com",
     "host": "UPDATE_HERE",
     "port": "587",
     "user": "UPDATE_HERE",

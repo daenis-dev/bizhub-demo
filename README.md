@@ -2,7 +2,7 @@
 
 ### Overview
 
-BizHub provides a free suite of easy to use business tools over the web. The initial product offering allows the user to backup up to ten gigabytes of files.
+BizHub provides a free suite of easy to use business tools over the web. The current product offering allows the user to backup up to ten gigabytes of files and it provides the user with a calendar utility.
 
 **Use Case:**
 
